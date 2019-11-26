@@ -40,6 +40,5 @@ urlpatterns = [
     url('^path/(?P<vin>.+)/$', views.FilterList.as_view()),
     path('path/', views.FilterList2.as_view()),
 
-
 ]
 
