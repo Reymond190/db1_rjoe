@@ -6,7 +6,7 @@
 
 from .models import ray
 from .serializers import GroupSerializer
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from django.shortcuts import render
 # from django.utils.termcolors import background
 # from pandas.io.json import json_normalize
@@ -80,18 +80,19 @@ def fun1(request):
 
     # for api
 
-    a1 = api1()
-    df = d
-    df2 = df.loc[(df["engine"] == "ON") & (df["speed"] > 0)]  # RUNNING VEHICLES
-    df3 = df.loc[(df["engine"] == "ON") & (df["speed"] == 0)]  # IDLE VEHICLES
-    df4 = df.loc[(df["engine"] == "OFF") & (df["speed"] == 0)]  # STOP_VEHICLES
-    a1.Running = str(df2.shape[0] + 1)
-    a1.Idle = str(df3.shape[0] + 1)
-    a1.Stop = str(df4.shape[0] + 1)
-    a1.NoData = "temperarily unavailable"
-    a1.No_of_geofence = "temperarily unavailable"
-    a1.No_of_overspeed = "temperarily unavailable"
-    a1.save()
+    # a1 = api1.objects.get(No="1")
+    # df = d
+    # df2 = df.loc[(df["engine"] == "ON") & (df["speed"] > 0)]  # RUNNING VEHICLES
+    # df3 = df.loc[(df["engine"] == "ON") & (df["speed"] == 0)]  # IDLE VEHICLES
+    # df4 = df.loc[(df["engine"] == "OFF") & (df["speed"] == 0)]  # STOP_VEHICLES
+    # a1.id = "1"
+    # a1.Running = str(df2.shape[0] + 1)
+    # a1.Idle = str(df3.shape[0] + 1)
+    # a1.Stop = str(df4.shape[0] + 1)
+    # a1.NoData = "temperarily unavailable"
+    # a1.No_of_geofence = "temperarily unavailable"
+    # a1.No_of_overspeed = "temperarily unavailable"
+    # a1.save()
 
     for i in range(d1.shape[0]):
         v2 = ray()
@@ -183,7 +184,7 @@ def fun1(request):
             v2.save()
             print("saved")
 
-    return render(request, 'users_list.html')
+    return render(request, 'generate_random_users.html')
 
 # class ApiList(APIView):
 #
@@ -221,3 +222,42 @@ def get_api():
     x2 = json.dumps(x1)
     y1 = json.loads(x2)
     return y1
+
+
+class FilterList(generics.ListAPIView):
+    serializer_class = GroupSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        username = self.kwargs['vin']
+
+        if (username != None):
+            p = ray.objects.filter(vin=username)
+        p = ray.objects.all()
+        return p
+
+class FilterList2(generics.ListAPIView):
+    serializer_class = GroupSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        p = ray.objects.all()
+        return p
+
+
+class ClassicList(generics.ListAPIView):
+    serializer_class = Serialize2
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        p = api1.objects.all()
+        return p
