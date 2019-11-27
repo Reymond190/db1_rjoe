@@ -53,12 +53,15 @@ def get_dataframe(y1):
 
 @shared_task
 def all():
+
+
     r = get_api()
     d = get_dataframe(r)
 
     d1 = d
 
-    #for api
+
+    # for api
 
     a1 = api1.objects.get(No="1")
     df = d
@@ -72,9 +75,7 @@ def all():
     a1.NoData = "temperarily unavailable"
     a1.No_of_geofence = "temperarily unavailable"
     a1.No_of_overspeed = "temperarily unavailable"
-    a1.save()
-
-
+    a1.save()  # hello
 
     for i in range(d1.shape[0]):
         v2 = ray()
