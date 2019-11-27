@@ -81,19 +81,19 @@ def fun1(request):
 
     # for api
 
-    # a1 = api1.objects.get(No="1")
-    # df = d
-    # df2 = df.loc[(df["engine"] == "ON") & (df["speed"] > 0)]  # RUNNING VEHICLES
-    # df3 = df.loc[(df["engine"] == "ON") & (df["speed"] == 0)]  # IDLE VEHICLES
-    # df4 = df.loc[(df["engine"] == "OFF") & (df["speed"] == 0)]  # STOP_VEHICLES
-    # a1.id = "1"
-    # a1.Running = str(df2.shape[0] + 1)
-    # a1.Idle = str(df3.shape[0] + 1)
-    # a1.Stop = str(df4.shape[0] + 1)
-    # a1.NoData = "temperarily unavailable"
-    # a1.No_of_geofence = "temperarily unavailable"
-    # a1.No_of_overspeed = "temperarily unavailable"
-    # a1.save()
+    a1 = api1.objects.get(No="1")
+    df = d
+    df2 = df.loc[(df["engine"] == "ON") & (df["speed"] > 0)]  # RUNNING VEHICLES
+    df3 = df.loc[(df["engine"] == "ON") & (df["speed"] == 0)]  # IDLE VEHICLES
+    df4 = df.loc[(df["engine"] == "OFF") & (df["speed"] == 0)]  # STOP_VEHICLES
+    a1.id = "1"
+    a1.Running = str(df2.shape[0] + 1)
+    a1.Idle = str(df3.shape[0] + 1)
+    a1.Stop = str(df4.shape[0] + 1)
+    a1.NoData = "temperarily unavailable"
+    a1.No_of_geofence = "temperarily unavailable"
+    a1.No_of_overspeed = "temperarily unavailable"
+    a1.save()  #hello
 
     for i in range(d1.shape[0]):
         v2 = ray()
@@ -185,7 +185,7 @@ def fun1(request):
             v2.save()
             print("saved")
 
-        return render(request, 'generate_random_users.html')
+    return render(request, 'generate_random_users.html')
 
 # class ApiList(APIView):
 #
@@ -211,7 +211,7 @@ def get_dataframe(y1):
 def get_api():
     time2 = datetime.datetime.now()
     print(time2)
-    time1 = time2 + timedelta(minutes=-5)
+    time1 = time2 + timedelta(seconds=-10)
     time1 = time1.strftime("%Y-%m-%d %H:%M:%S")
     time2 = time2.strftime("%Y-%m-%d %H:%M:%S")
     time1 = str(time1)
@@ -236,9 +236,8 @@ class FilterList(generics.ListAPIView):
         """
         username = self.kwargs['vin']
 
-        if (username != None):
-            p = ray.objects.filter(vin=username)
-        p = ray.objects.all()
+        p = ray.objects.filter(vin=username)
+
         return p
 
 class FilterList2(generics.ListAPIView):
