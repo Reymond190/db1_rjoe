@@ -83,6 +83,7 @@ def fun1(request):
 
     a1 = api1.objects.get(No="1")
     df = d
+    print(df.shape[0])
     df2 = df.loc[(df["engine"] == "ON") & (df["speed"] > 0)]  # RUNNING VEHICLES
     df3 = df.loc[(df["engine"] == "ON") & (df["speed"] == 0)]  # IDLE VEHICLES
     df4 = df.loc[(df["engine"] == "OFF") & (df["speed"] == 0)]  # STOP_VEHICLES
@@ -93,7 +94,7 @@ def fun1(request):
     a1.NoData = "temperarily unavailable"
     a1.No_of_geofence = "temperarily unavailable"
     a1.No_of_overspeed = "temperarily unavailable"
-    a1.save()  #hello
+    a1.save()
 
     for i in range(d1.shape[0]):
         v2 = ray()

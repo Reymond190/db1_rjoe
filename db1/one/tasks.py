@@ -60,11 +60,9 @@ def all():
 
     d1 = d
 
-
-    # for api
-
     a1 = api1.objects.get(No="1")
     df = d
+    print(df.shape[0])
     df2 = df.loc[(df["engine"] == "ON") & (df["speed"] > 0)]  # RUNNING VEHICLES
     df3 = df.loc[(df["engine"] == "ON") & (df["speed"] == 0)]  # IDLE VEHICLES
     df4 = df.loc[(df["engine"] == "OFF") & (df["speed"] == 0)]  # STOP_VEHICLES
