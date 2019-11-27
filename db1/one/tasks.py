@@ -21,6 +21,8 @@ from django.utils.crypto import get_random_string
 
 from celery import shared_task
 from .models import Alert ,api1
+import pytz
+
 
 @shared_task
 def random():
@@ -37,6 +39,9 @@ def get_dataframe(y1):
 
 def get_api():
     time2 = datetime.datetime.now()
+    tz = pytz.timezone('Asia/Kolkata')
+    time2 =  time2.astimezone(tz)
+    print(time2)
     time1 = time2 + timedelta(seconds=-10)
     time1 = time1.strftime("%Y-%m-%d %H:%M:%S")
     time2 = time2.strftime("%Y-%m-%d %H:%M:%S")
@@ -119,8 +124,11 @@ def all():
 
         else:
             v2.vin = d1['assetId'][i]
-            v2.date = datetime.datetime.now().date()
-            v2.time = datetime.datetime.now().time()
+            time2 = datetime.datetime.now()
+            tz = pytz.timezone('Asia/Kolkata')
+            time2 = time2.astimezone(tz)
+            v2.date = time2.date()
+            v2.time = time2.time()
             v2.AssetCode = d1['AssetCode'][i]
             v2.deviceImeiNo = d1['deviceImeiNo'][i]
             v2.plateNumber = d1['plateNumber'][i]
