@@ -22,12 +22,12 @@ from django.utils.crypto import get_random_string
 from celery import shared_task
 from .models import Alert ,api1
 
-# @shared_task
-# def random():
-#     i = Alert()
-#     time2 = datetime.datetime.now()
-#     i.time = time2
-#     i.save()
+@shared_task
+def random():
+    i = Alert()
+    time2 = datetime.datetime.now()
+    i.time = time2
+    i.save()
 
 
 def get_dataframe(y1):
