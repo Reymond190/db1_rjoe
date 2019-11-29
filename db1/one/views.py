@@ -3,6 +3,7 @@
 # from datetime import timedelta
 #
 #
+import pytz
 
 from .models import ray
 from .serializers import GroupSerializer
@@ -24,7 +25,7 @@ from django.http import HttpResponse
 import json
 from .models import ray
 import requests
-
+from django.db.models import Q
 import time
 from datetime import timedelta
 import datetime
@@ -75,26 +76,24 @@ def home(request):
 def fun1(request):
     r = get_api()
     d = get_dataframe(r)
-
     d1 = d
-    print(d)
-
-    # for api
 
     a1 = api1.objects.get(No="1")
+    po = ray.objects.all().count()
     df = d
     print(df.shape[0])
     df2 = df.loc[(df["engine"] == "ON") & (df["speed"] > 0)]  # RUNNING VEHICLES
     df3 = df.loc[(df["engine"] == "ON") & (df["speed"] == 0)]  # IDLE VEHICLES
     df4 = df.loc[(df["engine"] == "OFF") & (df["speed"] == 0)]  # STOP_VEHICLES
     a1.id = "1"
+    a1.Total = str(po)
     a1.Running = str(df2.shape[0] + 1)
     a1.Idle = str(df3.shape[0] + 1)
     a1.Stop = str(df4.shape[0] + 1)
     a1.NoData = "temperarily unavailable"
     a1.No_of_geofence = "temperarily unavailable"
     a1.No_of_overspeed = "temperarily unavailable"
-    a1.save()
+    a1.save()  # hello
 
     for i in range(d1.shape[0]):
         v2 = ray()
@@ -144,8 +143,11 @@ def fun1(request):
 
         else:
             v2.vin = d1['assetId'][i]
-            v2.date = datetime.datetime.now().date()
-            v2.time = datetime.datetime.now().time()
+            time2 = datetime.datetime.now()
+            tz = pytz.timezone('Asia/Kolkata')
+            time2 = time2.astimezone(tz)
+            v2.date = time2.date()
+            v2.time = time2.time()
             v2.AssetCode = d1['AssetCode'][i]
             v2.deviceImeiNo = d1['deviceImeiNo'][i]
             v2.plateNumber = d1['plateNumber'][i]
@@ -235,9 +237,12 @@ class FilterList(generics.ListAPIView):
         This view should return a list of all the purchases for
         the user as determined by the username portion of the URL.
         """
+        username = " "
+        lol = " "
         username = self.kwargs['vin']
+        lol = self.kwargs['vin']
 
-        p = ray.objects.filter(vin=username)
+        p = ray.objects.filter(Q(vin=username)|Q(plateNumber=lol))
 
         return p
 
