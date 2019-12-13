@@ -77,10 +77,10 @@ def fun1(request):
     r = get_api()
     d = get_dataframe(r)
     d1 = d
-
     a1 = api1.objects.get(No="1")
     po = ray.objects.all().count()
     df = d
+
     print(df.shape[0])
     df2 = df.loc[(df["engine"] == "ON") & (df["speed"] > 0)]  # RUNNING VEHICLES
     df3 = df.loc[(df["engine"] == "ON") & (df["speed"] == 0)]  # IDLE VEHICLES
@@ -108,6 +108,7 @@ def fun1(request):
                 v3.running = str(x)  # changes existing running to updated time
                 v3.endlocation = str(d1['latitude'][i]) + "," + str(d1['longitude'][i])
                 v3.engine_current = "ON"
+                v3.status = str(d1['status'][i])
                 if (d11[i] > v3.maxspeed):  # check maxspeed with currentspeed
                     v3.maxspeed = d11[i]
                 if (str(d1['status'][i]) == 'OverSpeed'):
@@ -132,7 +133,7 @@ def fun1(request):
 
             else:
                 print("Error")
-            v3.average = round(v3.average + d11[i] / 2)
+            v3.average = round((v3.average + d11[i]) / 2)
             v3.endodometer = float(v3.endodometer + float(d1['odometer'][i]))
             v3.No_of_iterations = v3.No_of_iterations + 1
             v3.distance = float(v3.distance + float(d1['odometer'][i]))
@@ -187,7 +188,6 @@ def fun1(request):
             v2.No_of_iterations = 0
             v2.save()
             print("saved")
-
     return render(request, 'generate_random_users.html')
 
 # class ApiList(APIView):
@@ -237,8 +237,7 @@ class FilterList(generics.ListAPIView):
         This view should return a list of all the purchases for
         the user as determined by the username portion of the URL.
         """
-        username = " "
-        lol = " "
+
         username = self.kwargs['vin']
         lol = self.kwargs['vin']
 

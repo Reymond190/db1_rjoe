@@ -129,7 +129,8 @@ def all():
             tz = pytz.timezone('Asia/Kolkata')
             time2 = time2.astimezone(tz)
             v2.date = time2.date()
-            v2.time = time2.time()
+            ui = time2.time()
+            v2.time = datetime.datetime.strptime(ui, '%H:%M:%S')
             v2.AssetCode = d1['AssetCode'][i]
             v2.deviceImeiNo = d1['deviceImeiNo'][i]
             v2.plateNumber = d1['plateNumber'][i]
