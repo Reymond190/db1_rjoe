@@ -6,7 +6,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ray
         fields = ['vin' ,'date', 'time', 'startlocation', 'startodometer', 'running',\
-    'idle', 'stop', 'inactive', 'endodometer', 'endlocation', 'distance',\
+    'idle', 'stop', 'inactive', 'endodometer', 'endlocation','status', 'distance',\
     'average','maxstop', 'maxspeed', 'overspeed', 'alert', 'AssetCode',\
     'deviceImeiNo', 'noidle', 'plateNumber', 'No_of_iterations', 'engine_current', 'current_speed','latitude',
     'longitude','direction']
