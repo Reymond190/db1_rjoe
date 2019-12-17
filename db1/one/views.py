@@ -180,6 +180,7 @@ def fun1(request):
             v2.maxstop = 0
             v2.maxspeed = d11[i]
             v2.average = d11[i]
+            v2.status = str(d1['status'][i])
             v2.overspeed = 0
             v2.alert = 0
             v2.direction = str(d1['direction'][i])
