@@ -55,3 +55,4 @@ class api1(models.Model):
     No_of_geofence = models.CharField(max_length=20, null=True)
 
 
+

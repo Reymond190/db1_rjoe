@@ -56,7 +56,7 @@ def get_api():
 
 
 @shared_task
-def all():
+def all2():
     r = get_api()
     d = get_dataframe(r)
     d1 = d
