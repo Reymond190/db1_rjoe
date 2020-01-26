@@ -17,10 +17,10 @@ def see_you():
 app.autodiscover_tasks(see_you)
 
 
-# app.conf.beat_schedule = {
-#     "see-you-in-ten-seconds-task": {
-#         "task": "one.tasks.all2",
-#         "schedule": 10.0,
-#     }
-#
-# }
+app.conf.beat_schedule = {
+    "see-you-in-ten-seconds-task": {
+        "task": "one.tasks.all2",
+        "schedule": 10.0,
+    }
+
+}
